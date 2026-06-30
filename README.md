@@ -6,15 +6,6 @@ Aplicação Front-end desenvolvida em React para apresentar informações sobre 
 
 🔗 Site: https://copa-do-mundo2026-bycaio.vercel.app/
 
-📸 Home img_1.png
-
-📸 Detalhes da Seleção
-
-img.png
-
-📸 Detalhes do Jogador
-
-img_2.png
 
 ## 📸 Funcionalidades
 
