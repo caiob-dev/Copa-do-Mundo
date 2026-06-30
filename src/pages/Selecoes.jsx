@@ -5,8 +5,12 @@ import { Link, useParams } from "react-router";
 import heroTrophy from "../assets/world-cup-trophy.jpg";
 
 import arrowLeft from "../assets/back.svg";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Selecoes() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const { id } = useParams();
 
   const [selecao, setSelecao] = useState(null);
@@ -18,14 +22,31 @@ export default function Selecoes() {
         setSelecao(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados das seleções", error);
+        setError(true)
+      } finally {
+        setTimeout(() => {
+          setLoading(false)
+        },300 );
       }
     }
 
     carregarDadosSelecoes();
   }, [id]);
 
-  if (!selecao) {
-    return <div>Carregando...</div>;
+   if (loading) {
+    return (
+      <section className="min-h-dvh flex flex-col justify-center items-center text-2xl text-white pb-3.5">
+        <LoadingSpinner />
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="min-h-dvh flex flex-col justify-start text-2xl text-fundo-vermelho">
+        <p>Erro ao carregar detalhes da seleção 😥. Tente novamente mais tarde!</p>
+      </section>
+    );
   }
 
   return (
@@ -52,21 +73,21 @@ export default function Selecoes() {
         />
         <h2 className="pt-5 text-3xl">{selecao.nome}</h2>
 
-        <p>
+        <p className="">
           Títulos:{" "}
           <span className="text-gold">{selecao.quantidadeTitulos}</span>
         </p>
 
-        <p>
+        <p className="">
           Participações:{" "}
           <span className="text-gold">{selecao.partipacoes}</span>
         </p>
 
-        <p>
+        <p className="">
           Status: <span className="text-gold">{selecao.statusTitulo}</span>
         </p>
 
-        <p>
+        <p className="max-[370px]:text-[15.4px] max-[393px]:text-[17px] max-[440px]:text-[18px]">
           {selecao.maiorVencedorDaSelecao.length === 0 && ""}
 
           {selecao.maiorVencedorDaSelecao.length === 1 && (
@@ -94,10 +115,10 @@ export default function Selecoes() {
             </>
           )}
         </p>
-        <h1 className="text-2xl pt-3 text-center">Principais jogadores em copas:</h1>
+        <h1 className="text-2xl pt-3 text-center max-[440px]:text-[20px]">Principais jogadores em copas:</h1>
         {selecao.jogadores.map((jogador, i) => (
           <div className="flex justify-center" key={i}>
-            <p>
+            <p className="max-[370px]:text-[16px] max-[393px]:text-[17px] max-[440px]:text-[19px]">
               {jogador.split(", ")}{" "}
               <span className="text-gold">
                 - nº de gols: {selecao.gols[i]}

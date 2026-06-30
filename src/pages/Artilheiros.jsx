@@ -5,8 +5,12 @@ import { http } from "../services/api";
 import arrowLeft from "../assets/back.svg";
 import worldCup from "../assets/world-cup-26.webp";
 import trofeu from "../assets/copa.png";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Artilheiros() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const { id } = useParams();
 
   const [artilheiros, setArtilheiros] = useState([]);
@@ -18,13 +22,31 @@ export default function Artilheiros() {
         setArtilheiros(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados das seleções", error);
+        setError(true);
+      } finally {
+        setTimeout(() => setLoading(false), 300);
       }
     }
     getArtilheiros();
   }, [id]);
 
-  if (!artilheiros) {
-    return <div>Carregando...</div>;
+  if (loading) {
+    return (
+      <section className="min-h-dvh flex flex-col justify-center items-center text-2xl text-white pb-3.5">
+        <LoadingSpinner />
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="min-h-dvh flex flex-col justify-start text-2xl text-fundo-vermelho">
+        <p>
+          Erro ao carregar detalhes do artilheiro 😥. Tente novamente mais
+          tarde!
+        </p>
+      </section>
+    );
   }
 
   const bandeiras = {
@@ -66,7 +88,7 @@ export default function Artilheiros() {
       <div className="flex flex-col mx-auto gap-4 items-center p-6 mb-1 ">
         <img
           src={artilheiros.foto}
-          className="w-[50%] border-amber-50 border"
+          className="w-[50%] border-amber-50 border max-[440px]:w-full"
           alt={`Imagem do jogador ${artilheiros.nomeJogador}`}
         />
 
@@ -76,43 +98,36 @@ export default function Artilheiros() {
           alt={`Bandeira da ${artilheiros.selecao}`}
         />
         <h2 className="text-3xl">
-            {artilheiros.nomeJogador}
-            {artilheiros.nomeJogador === "Pelé" && "👑"} 
-            {/* {artilheiros.nomeJogador === "Lionel Messi" && "👑"}  */}
-
+          {artilheiros.nomeJogador}
+          {artilheiros.nomeJogador === "Pelé" && "👑"}
+          {/* {artilheiros.nomeJogador === "Lionel Messi" && "👑"}  */}
         </h2>
 
-        <p className="text-2xl">Número de gols: <span className="text-primary">{artilheiros.numeroDeGols}</span></p>
+        <p className="text-2xl">
+          Número de gols:{" "}
+          <span className="text-primary">{artilheiros.numeroDeGols}</span>
+        </p>
 
         <div className="flex gap-2">
-          <p className="text-2xl">Títulos de copa do mundo: {artilheiros.titulosDeCopaDoMundo}</p>
+          <p className="text-2xl max-[370px]:text-[22px] max-[393px]:text-[21px]">
+            Títulos de copa do mundo:
+          </p>
           <div className="flex gap-1">
-            {[...Array(artilheiros.titulosDeCopaDoMundo)].map((_, index) => (
-              <img
-                src={trofeu}
-                key={index}
-                alt="Troféu da Copa do Mundo"
-                className="w-[25px]"
-              />
-            ))}
+            {artilheiros.titulosDeCopaDoMundo === 0 ? (
+              <span className="text-2xl max-[370px]:text-[22px] max-[393px]:text-[21px] text-white">0</span>
+            ) : (
+              [...Array(artilheiros.titulosDeCopaDoMundo)].map((_, index) => (
+                <img
+                  src={trofeu}
+                  key={index}
+                  alt="Troféu da Copa do Mundo"
+                  className="w-[25px]"
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
-
-      {/* <p>Participações: {selecao.partipacoes}</p>
-
-
-      <p>Status: {selecao.statusTitulo}</p>
-
-      <p>
-        {selecao.maiorVencedorDaSelecao.length === 0 && "Nenhum vencedor"}
-
-        {selecao.maiorVencedorDaSelecao.length === 1  &&
-          `Maior vencedor: ${selecao.maiorVencedorDaSelecao[0]} com ${selecao.nmrTitulos} título(s).`}
-
-        {selecao.maiorVencedorDaSelecao.length > 1 &&
-          `Maiores vencedores: ${selecao.maiorVencedorDaSelecao.join(", ")} com ${selecao.nmrTitulos} título cada.`}
-      </p> */}
     </section>
   );
 }
