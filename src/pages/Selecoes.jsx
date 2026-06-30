@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { http } from "../api/api";
+import { http } from "../services/api";
 import { Link, useParams } from "react-router";
+
 import heroTrophy from "../assets/world-cup-trophy.jpg";
 
 import arrowLeft from "../assets/back.svg";

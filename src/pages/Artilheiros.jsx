@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { http } from "../api/api";
+import { http } from "../services/api";
+
 import arrowLeft from "../assets/back.svg";
-/* import messi from "../assets/messi-gol.jpeg"; */
 import worldCup from "../assets/world-cup-26.webp";
 import trofeu from "../assets/copa.png";
-/* import heroTrophy from "../assets/world-cup-trophy.jpg"; */
 
 export default function Artilheiros() {
   const { id } = useParams();
