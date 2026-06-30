@@ -1,18 +1,99 @@
-# React + Vite
+# 🌎 Copa do Mundo - Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação Front-end desenvolvida em React para apresentar informações sobre a história da Copa do Mundo, seleções campeãs e jogadores históricos.
 
-Currently, two official plugins are available:
+## 🚀 Demonstração
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 Site: https://copa-do-mundo2026-bycaio.vercel.app/
 
-## React Compiler
+📸 Home img_1.png
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+📸 Detalhes da Seleção
 
-Note: This will impact Vite dev & build performances.
+img.png
 
-## Expanding the ESLint configuration
+📸 Detalhes do Jogador
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+img_2.png
+
+## 📸 Funcionalidades
+
+- Página inicial responsiva
+- Lista das seleções campeãs
+- Top 5 seleções com mais títulos
+- Lista dos maiores artilheiros
+- Página de detalhes das seleções
+- Página de detalhes dos jogadores
+- Exibição dinâmica de:
+  - Bandeiras
+  - Fotos dos jogadores
+  - Quantidade de títulos
+- Integração com API REST
+
+---
+
+## 🛠 Tecnologias
+
+- React
+- React Router DOM
+- Axios
+- Tailwind CSS
+- JavaScript (ES6+)
+- Vite
+
+---
+
+## 🌐 Serviços utilizados
+
+- Vercel (Deploy do Front-end)
+- Render (API)
+- Neon PostgreSQL (Banco de dados)
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+src/
+ ├── assets/
+ ├── components/
+ ├── pages/
+ ├── routes/
+ ├── services/
+ └── App.jsx
+```
+
+---
+
+## ⚙️ Instalação
+
+```bash
+git clone https://github.com/caiob-dev/Copa-do-Mundo.git
+
+cd Copa-do-Mundo
+
+npm install
+
+npm run dev
+```
+
+---
+
+## 📡 API
+
+Esta aplicação consome a API desenvolvida em Spring Boot.
+
+Repositório:
+
+👉 https://github.com/caiob-dev/Copa-do-Mundo-com-Java-Postgres-Spring-Data-JPA
+
+---
+
+## 👨‍💻 Autor
+
+Caio Bomfim
+
+LinkedIn: https://www.linkedin.com/in/caio-bomfim-pantoja/
+
+GitHub:
+https://github.com/caiob-dev
