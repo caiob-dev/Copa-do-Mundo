@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { http } from "../services/api";
+import { use, useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import heroTrophy from "../assets/hero-trophy.jpg";
@@ -10,6 +9,7 @@ import copa from "../assets/copa.png";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import ToDoContext from "../context/ToDoContext.js";
 
 const year = new Date().getFullYear();
 
@@ -55,49 +55,11 @@ function useCountdown(target) {
 }
 
 export default function Home() {
+
+  const {selecoes, topSelecoes, jogadores} = use(ToDoContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { d, h, m, s } = useCountdown(new Date("2026-07-19T19:00:00Z"));
-
-  const [selecoes, setSelecoes] = useState([]);
-  const [topSelecoes, setTopSelecoes] = useState([]);
-  const [jogadores, setJogadores] = useState([]);
-
-  useEffect(() => {
-    async function getSelecoes() {
-      try {
-        const response = await http.get("/selecoes");
-        setSelecoes(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar seleções", error);
-      }
-    }
-    getSelecoes();
-  }, []);
-
-  useEffect(() => {
-    async function getTop5Selecoes() {
-      try {
-        const response = await http.get("/selecoes/top5");
-        setTopSelecoes(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar top 5 seleções", error);
-      }
-    }
-    getTop5Selecoes();
-  }, []);
-
-  useEffect(() => {
-    async function getJogadores() {
-      try {
-        const response = await http.get("/jogadores/artilheiros");
-        setJogadores(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar jogadores", error);
-      }
-    }
-    getJogadores();
-  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -136,7 +98,7 @@ export default function Home() {
         </div>
 
         {menuOpen && (
-          <nav className="md:hidden flex flex-col items-center gap-5 pb-3 text-sm text-white uppercase tracking-widest text-muted-foreground">
+          <nav className="md:hidden flex flex-col items-center gap-5 pb-3 text-sm text-white uppercase tracking-widest">
             <a
               href="#sobre"
               className="hover:text-primary transition"
@@ -212,7 +174,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="#contagem"
-                className="px-8 py-4 rounded-md bg-[image:var(--gradient-gold)] text-primary-foreground font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform 
+                className="px-8 py-4 rounded-md bg-(image:--gradient-gold) text-primary-foreground font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform 
                 max-[370px]:px-2 max-[370px]:py-2 max-[393px]:text-[14px] max-[393px]:text-nowrap max-[393px]:px-2"
                 style={{ boxShadow: "var(--shadow-gold)" }}
               >
@@ -280,7 +242,7 @@ export default function Home() {
               11 de junho de 2026.
             </p>
           </div>
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+          <div className="relative aspect-4/3 rounded-2xl overflow-hidden">
             <img
               src={stadium}
               loading="lazy"
@@ -289,7 +251,7 @@ export default function Home() {
               height={900}
               className="w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent " />
+            <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent " />
             <div className="absolute bottom-6 left-6 max-[440px]:bottom-0 max-[440px]:left-1 ">
               <div className="display text-3xl text-primary ">16 CIDADES</div>
               <div className="text-sm text-muted-foreground max-[440px]:text-white">
